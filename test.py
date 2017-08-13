@@ -1,5 +1,11 @@
 # coding : utf-8
 # python3.6.2
 
-print ("hello python3 by MBA")
-print ("second commit test")
+import TwitterAPI
+
+CK = TwitterAPI.CK
+CS = TwitterAPI.CS
+AT = TwitterAPI.AT
+ATS = TwitterAPI.ATS
+
+URL = "https://"
