@@ -3,11 +3,18 @@
 
 import TwitterAPI
 import json
-from requests_oauthlib import OAuth1Session
+import tweepy
 
 CK = TwitterAPI.CK
 CS = TwitterAPI.CS
 AT = TwitterAPI.AT
 ATS = TwitterAPI.ATS
 
-URL = "https://"
+auth = tweepy.OAuthHandler(CA, CS)
+auth.set_access_token(AT, ATS)
+
+api = tweepy.API(auth)
+
+print (api.me().name)
+
+api.update_status(status='Test tweet via tweepy')
