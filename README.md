@@ -1,3 +1,3 @@
 # CheckingOwnTweets
-For checking own timeline regularly to operate another devices.
+For checking own timeline regularly to operate another devices.  
 And practice for using github and python coding...
