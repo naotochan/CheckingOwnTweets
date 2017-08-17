@@ -1,11 +1,13 @@
 # coding : utf-8
 # python3.6.2
-# 直近の20ツイートからエアコンを制御
+# 直近の10ツイートからエアコンを制御
 
 import TwitterAPI
 import tweepy
 import datetime
 import re
+
+MAX_COUNT = 10
 
 CK = TwitterAPI.CK
 CS = TwitterAPI.CS
@@ -17,7 +19,7 @@ auth.set_access_token(AT, ATS)
 api = tweepy.API(auth)
 
 # cronで1分ごとに直近20ツイート取得
-tweet_data = api.user_timeline(count = 10)
+tweet_data = api.user_timeline(count = MAX_COUNT)
 
 #内容確認
 for tweet in tweet_data:
@@ -35,7 +37,7 @@ offPattern = "eakon off!"
 for data in tweet_data:
     if signalFlag == False:
         onMatchOb = re.search(data, onPattern)
-        
+
         if onMatchOb:
             signal = True
             signalFlag = True
