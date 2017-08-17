@@ -35,13 +35,15 @@ offPattern = "eakon off!"
 for data in tweet_data:
     if signalFlag == False:
         onMatchOb = re.search(data, onPattern)
-        offMatchOb = re.search(data, offPattern)
-        if compileOn.find():
-            signal = TRUE
+        
+        if onMatchOb:
+            signal = True
+            signalFlag = True
 
-        compileOff = patternOff.compile(data)
-        if compileOff.find():
-            signal = FALSE
+        offMatchOb = re.search(data, offPattern)
+        if offMatchOb:
+            signal = False
+            signalFlag = True
 
 # signalでonかoffのすくスクリプト実行
 if signal = TRUE:
