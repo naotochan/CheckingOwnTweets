@@ -1,11 +1,9 @@
 # coding : utf-8
 # python3.6.2
-# 1分以内のツイートからエアコンを制御する
+# 直近の20ツイートからエアコンを制御
 
 import TwitterAPI
-# import json
 import tweepy
-import csv
 import datetime
 import re
 
@@ -18,46 +16,35 @@ auth = tweepy.OAuthHandler(CK, CS)
 auth.set_access_token(AT, ATS)
 api = tweepy.API(auth)
 
-tweet_data = []
+# cronで1分ごとに直近20ツイート取得
+tweet_data = api.user_timeline(count = 10)
 
-# cronで1分ごとに1分以内のツイートツイート取得
-for tweet in tweepy.Cursor(api.user_timeline,screen_name = "ChanmansCompany",exclude_replies = None).items():
-    # 1分以内のツイートだけ取得
-    print (tweet.created_at)
-    tweetTime = datetime.datetime.strptime(tweet.created_at, '%Y/%m/%d %H:%M:%S')
-    tweetTime += datetime.datetime.timedelta(mins = 1)
-    now = datetime.datetime.now()
+#内容確認
+for tweet in tweet_data:
+    print (str(tweet.created_at) + tweet.text)
 
-    if tweetTime > now:
-        tweet_data.append(tweet.text.replace('\n',''))
 
-for x in tweet:
-    print (x)
+取得したツイートを正規表現でチェック
+signal = TRUE
+sginalFlag = False;
 
-# 取得したツイートを正規表現でチェック
-# signal = TRUE
-#
-# for data in tweet_data:
-#     patternOn = regex.compile("eakon on!")
-#     compileOn = patternOn.compile(data)
-#     if compileOn.find():
-#         signal = TRUE
-#
-#     patternOff = regex.compile("eakon off!")
-#     compileOff = patternOff.compile(data)
-#     if compileOff.find():
-#         signal = FALSE
-#
-# # signalでonかoffのすくスクリプト実行
-# if signal = TRUE:
-#     print ("-*-*- Putting On My Home AirConditioner... -*-*-")
-# else:
-#     print ("-*-*- Putting Off My Home AirConditioner... -*-*-")
+onPattern = "eakon on!"
+offPattern = "eakon off!"
 
-#csv出力
-with open('OwnTimeline.csv', 'w',newline='',encoding='utf-8') as f:
-    writer = csv.writer(f, lineterminator='\n')
-    writer.writerow(["id","created_at","text","fav","RT"])
-    writer.writerows(tweet_data)
-pass
-# api.update_status(status='Test tweet via tweepy')
+
+for data in tweet_data:
+    if signalFlag == False:
+        onMatchOb = re.search(data, onPattern)
+        offMatchOb = re.search(data, offPattern)
+        if compileOn.find():
+            signal = TRUE
+
+        compileOff = patternOff.compile(data)
+        if compileOff.find():
+            signal = FALSE
+
+# signalでonかoffのすくスクリプト実行
+if signal = TRUE:
+    print ("-*-*- Putting On My Home AirConditioner... -*-*-")
+else:
+    print ("-*-*- Putting Off My Home AirConditioner... -*-*-")
