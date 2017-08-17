@@ -26,9 +26,9 @@ for tweet in tweet_data:
     print (str(tweet.created_at) + tweet.text)
 
 
-取得したツイートを正規表現でチェック
-signal = TRUE
-sginalFlag = False;
+# 取得したツイートを正規表現でチェック
+signal = True
+signalFlag = False
 
 onPattern = "eakon on!"
 offPattern = "eakon off!"
@@ -48,7 +48,7 @@ for data in tweet_data:
             signalFlag = True
 
 # signalでonかoffのすくスクリプト実行
-if signal = TRUE:
+if signal:
     print ("-*-*- Putting On My Home AirConditioner... -*-*-")
 else:
     print ("-*-*- Putting Off My Home AirConditioner... -*-*-")
