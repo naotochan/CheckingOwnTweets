@@ -25,30 +25,31 @@ tweet_data = api.user_timeline(count = MAX_COUNT)
 for tweet in tweet_data:
     print (str(tweet.created_at) + tweet.text)
 
-
 # 取得したツイートを正規表現でチェック
-signal = True
+signal = 0
 signalFlag = False
 
 onPattern = "eakon on!"
 offPattern = "eakon off!"
 
 
-for data in tweet_data:
+for tweet in tweet_data:
     if signalFlag == False:
-        onMatchOb = re.search(data, onPattern)
+        onMatchOb = re.search(tweet.text, onPattern)
 
         if onMatchOb:
-            signal = True
+            signal = 1
             signalFlag = True
 
-        offMatchOb = re.search(data, offPattern)
+        offMatchOb = re.search(tweet.text, offPattern)
         if offMatchOb:
-            signal = False
+            signal = -1
             signalFlag = True
 
 # signalでonかoffのすくスクリプト実行
-if signal:
+if signal == 1:
     print ("-*-*- Putting On My Home AirConditioner... -*-*-")
-else:
+elif signal == -1:
     print ("-*-*- Putting Off My Home AirConditioner... -*-*-")
+else :
+    print ("-*-*- do nothing -*-*-")
