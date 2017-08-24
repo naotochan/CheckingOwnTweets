@@ -18,7 +18,7 @@ auth = tweepy.OAuthHandler(CK, CS)
 auth.set_access_token(AT, ATS)
 api = tweepy.API(auth)
 
-# cronで1分ごとに直近20ツイート取得
+# cronで1分ごとに直近10ツイート取得
 tweet_data = api.user_timeline(count = MAX_COUNT)
 
 #内容確認
@@ -32,19 +32,25 @@ signalFlag = False
 onPattern = "eakon on!"
 offPattern = "eakon off!"
 
+now = datetime.date.today()
+now -= datetime.timedelta(minutes = 60)
+print ("now : " + str(now))
 
 for tweet in tweet_data:
-    if signalFlag == False:
-        onMatchOb = re.search(tweet.text, onPattern)
+    if tweet.created_at > now():
+        if signalFlag == False:
+            onMatchOb = re.search(tweet.text, onPattern)
 
-        if onMatchOb:
-            signal = 1
-            signalFlag = True
+            if onMatchOb:
+                signal = 1
+                signalFlag = True
 
-        offMatchOb = re.search(tweet.text, offPattern)
-        if offMatchOb:
-            signal = -1
-            signalFlag = True
+            offMatchOb = re.search(tweet.text, offPattern)
+            if offMatchOb:
+                signal = -1
+                signalFlag = True
+    else:
+        print ("nothing tweet in recently")
 
 # signalでonかoffのすくスクリプト実行
 if signal == 1:
