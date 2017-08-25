@@ -22,8 +22,8 @@ api = tweepy.API(auth)
 tweet_data = api.user_timeline(count = MAX_COUNT)
 
 #内容確認
-for tweet in tweet_data:
-    print (str(tweet.created_at) + tweet.text)
+# for tweet in tweet_data:
+#     print (str(tweet.created_at) + tweet.text)
 
 # 取得したツイートを正規表現でチェック
 signal = 0
@@ -32,12 +32,12 @@ signalFlag = False
 onPattern = "eakon on!"
 offPattern = "eakon off!"
 
-now = datetime.date.today()
-now -= datetime.timedelta(minutes = 60)
-print ("now : " + str(now))
+now = datetime.datetime.now()
+now -= datetime.timedelta(minutes = -60)
+
 
 for tweet in tweet_data:
-    if tweet.created_at > now():
+    if tweet.created_at > now:
         if signalFlag == False:
             onMatchOb = re.search(tweet.text, onPattern)
 
@@ -49,8 +49,6 @@ for tweet in tweet_data:
             if offMatchOb:
                 signal = -1
                 signalFlag = True
-    else:
-        print ("nothing tweet in recently")
 
 # signalでonかoffのすくスクリプト実行
 if signal == 1:
@@ -58,4 +56,5 @@ if signal == 1:
 elif signal == -1:
     print ("-*-*- Putting Off My Home AirConditioner... -*-*-")
 else :
+    print ("nothing tweet in recently")
     print ("-*-*- do nothing -*-*-")
