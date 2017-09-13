@@ -1,6 +1,7 @@
 # coding : utf-8
 # python3.6.2
 # 直近の10ツイートからエアコンを制御
+# t
 
 import TwitterAPI
 import tweepy
